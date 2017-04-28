@@ -16,7 +16,7 @@ $(document).ready(function(){
                 cityLoc = cityLoc.replace(" ", "_")
             var morningTime = ''
             var eveningTime = ''
-            prettySearchURL = "http://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLoc+".json"
+            prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLoc+".json"
             
             $.get(prettySearchURL)
             .then(function(hourlydata){
