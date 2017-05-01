@@ -1,26 +1,37 @@
 $(document).ready(function(){
     var searchURL = "https://api.wunderground.com/api/a4e9f436358c9497/geolookup/q/"
     $("#morning-commuter-data .pop-warning").hide()
-    
+    $("#evening-commuter-data .pop-warning").hide()
+    $("#commuter-data").hide()
     $('#wtw').click(function(){
-        $('#commuter-data').show()
+        
+        //$('#morning-forecast h1').empty()
         var zipcode = $('#zip').val()
         var morning = $('#morning-commute').val()
         var evening = $('#evening-commute').val()
         searchURL = searchURL + zipcode + ".json"
+        console.log(searchURL)
+        
         //console.log(zipcode)
         $.get(searchURL)
         .then(function(data){
+            
             var cityLoc = data.location.city
             var stateLoc = data.location.state
-                cityLoc = cityLoc.replace(" ", "_")
+                cityLocurl = cityLoc.replace(" ", "_")
             var morningTime = ''
             var eveningTime = ''
-            prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLoc+".json"
-            
+            prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLocurl+".json"
+            $('#form-fields').fadeOut("fast", function(){
+               var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2></div>").hide();
+               $(this).replaceWith(div);
+               $('#form-fields').fadeIn("fast");
+            });
             $.get(prettySearchURL)
             .then(function(hourlydata){
-                for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
+                $('#commuter-data').show()
+                //for (i = 0; i <= hourlydata.hourly_forecast.length; i++) {
+                 for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
                     // Time Variables
                     var timeObject = hourlydata.hourly_forecast[i].FCTTIME
                     var paddedHour = timeObject.hour_padded
@@ -44,8 +55,9 @@ $(document).ready(function(){
                             today = weekday + " " + month + " " + date + ", " + year
                             morningTime = today + " at " + civilTime
                             morningWeatherIcon = weatherIcon
-
-                        //console.log(hourlydata.hourly_forecast[i])
+                        console.log("Items for morning:")
+                        console.log(feelslike)
+                        console.log(hourlydata.hourly_forecast[i])
                         console.log("Precip Chance: " + popChance)
                         // Feels Like Temp Ranges
                         if (feelslike >= "40" && feelslike <= "50") {
@@ -84,12 +96,13 @@ $(document).ready(function(){
                 var morningWeatherimg = $('#morning-icon') //Equivalent: $(document.createElement('img'))
                     morningWeatherimg.attr('src', morningWeatherIcon)
                 
+                $('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
                 $('#morning-commuter-data .date').append(morningTime)
-                $('#morning-forecast h1').append(feelslike)
+                $('#morning-forecast h1').append(feelslike+"&deg;<span>f</span>")
                 $('#morning-forecast p').append(morningCondition)
                 
                 $('#evening-commuter-data .date').append(eveningTime)
-                var eveningWeatherimg = $('#evening-icon') //Equivalent: $(document.createElement('img'))
+                var eveningWeatherimg = $('#evening-icon') 
                     eveningWeatherimg.attr('src', eveningWeatherIcon)
 
             })

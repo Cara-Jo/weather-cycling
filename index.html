@@ -7,94 +7,128 @@
 
 </head>
 <body>
-    <div id="header">
-        <h1 class="text-center">Build a bike commuter</h1>
+
+    <div id="masthead">
+        <img src="images/icons.svg"/>
+
     </div>
-    <div class="row">
-        <div class="small-6 large-4 columns">
-            
-            <label for="zip">Zip Code</label>
-            <input type="text" name="zip" placeholder="Zip Code" id="zip" value="80210">
-            <label for="morning-commute">Morning Commute Time</label>
-
-            <select id="morning-commute">
-                <option value="00">12:00am</option>
-                <option value="01">01:00am</option>
-                <option value="02">02:00am</option>
-                <option value="03">03:00am</option>
-                <option value="04">04:00am</option>
-                <option value="05">05:00am</option>
-                <option value="06">06:00am</option>
-                <option value="07">07:00am</option>
-                <option value="08" selected>08:00am</option>
-                <option value="09">09:00am</option>
-                <option value="10">10:00am</option>
-                <option value="11">11:00am</option>
-                <option value="12">12:00pm</option>
-                <option value="13">01:00pm</option>
-                <option value="14">02:00pm</option>
-                <option value="15">03:00pm</option>
-                <option value="16">04:00pm</option>
-                <option value="17">05:00pm</option>
-                <option value="18">06:00pm</option>
-                <option value="19">07:00pm</option>
-                <option value="20">08:00pm</option>
-                <option value="21">09:00pm</option>
-                <option value="22">10:00pm</option>
-                <option value="23">11:00pm</option>
-            </select>
-
-            <label for="evening-commute">Evening Commute Time</label>
-
-            <select id="evening-commute">
-                <option value="00">12:00am</option>
-                <option value="01">01:00am</option>
-                <option value="02">02:00am</option>
-                <option value="03">03:00am</option>
-                <option value="04">04:00am</option>
-                <option value="05">05:00am</option>
-                <option value="06">06:00am</option>
-                <option value="07">07:00am</option>
-                <option value="08">08:00am</option>
-                <option value="09">09:00am</option>
-                <option value="10">10:00am</option>
-                <option value="11">11:00am</option>
-                <option value="12">12:00pm</option>
-                <option value="13">01:00pm</option>
-                <option value="14">02:00pm</option>
-                <option value="15">03:00pm</option>
-                <option value="16">04:00pm</option>
-                <option value="17" selected>05:00pm</option>
-                <option value="18">06:00pm</option>
-                <option value="19">07:00pm</option>
-                <option value="20">08:00pm</option>
-                <option value="21">09:00pm</option>
-                <option value="22">10:00pm</option>
-                <option value="23">11:00pm</option>
-            </select>
-            <button type="submit" value="" id="wtw" class="button">Tell me what to wear</button>
-        </div>
-        <div class="small-6 large-8 columns" id="commuter-data">
-            <div id="weather" class="row">
-                <div class="small-6 large-6 columns" id="morning-commuter-data">
-                    <h2>Morning</h2>
-                    <p class="date"></p>
-                    <div id="morning-forecast">
-                        <img src="" id="morning-icon">
-                        <h1></h1>
-                        <p></p>
-                    </div>
-                    <div class="pop-warning callout ">
-                        <p>There is a <strong><span class="pop-chance"></span></strong> chance of rain.</p>
-                    </div>
+    <div id="title">
+        <h1 class="text-center">What to Wear</h1>
+        <p class="text-center">Be prepared for your bike commute.</p>
+    </div>
+    <div id="form-fields-wrapper">
+        <div  id="form-fields">
+            <div class="row">
+                <div class="small-12 large-4 columns">
+                    <label for="zip">Zip Code</label>
+                    <input type="text" name="zip" placeholder="Zip Code" id="zip" value="80210">
                 </div>
-                <div class="small-6 large-6 columns" id="evening-commuter-data">
-                    <h2>Evening</h2>
-                    <p class="date"></p>
+                <div class="small-12 large-4 columns">
+                    <label for="morning-commute">Morning Commute Time</label>
+
+                    <select id="morning-commute">
+                        <option value="00">12:00am</option>
+                        <option value="01">01:00am</option>
+                        <option value="02">02:00am</option>
+                        <option value="03">03:00am</option>
+                        <option value="04">04:00am</option>
+                        <option value="05">05:00am</option>
+                        <option value="06">06:00am</option>
+                        <option value="07">07:00am</option>
+                        <option value="08" selected>08:00am</option>
+                        <option value="09">09:00am</option>
+                        <option value="10">10:00am</option>
+                        <option value="11">11:00am</option>
+                        <option value="12">12:00pm</option>
+                        <option value="13">01:00pm</option>
+                        <option value="14">02:00pm</option>
+                        <option value="15">03:00pm</option>
+                        <option value="16">04:00pm</option>
+                        <option value="17">05:00pm</option>
+                        <option value="18">06:00pm</option>
+                        <option value="19">07:00pm</option>
+                        <option value="20">08:00pm</option>
+                        <option value="21">09:00pm</option>
+                        <option value="22">10:00pm</option>
+                        <option value="23">11:00pm</option>
+                    </select>
+                </div>
+                <div class="small-12 large-4 columns">
+                    <label for="evening-commute">Evening Commute Time</label>
+
+                    <select id="evening-commute">
+                        <option value="00">12:00am</option>
+                        <option value="01">01:00am</option>
+                        <option value="02">02:00am</option>
+                        <option value="03">03:00am</option>
+                        <option value="04">04:00am</option>
+                        <option value="05">05:00am</option>
+                        <option value="06">06:00am</option>
+                        <option value="07">07:00am</option>
+                        <option value="08">08:00am</option>
+                        <option value="09">09:00am</option>
+                        <option value="10">10:00am</option>
+                        <option value="11">11:00am</option>
+                        <option value="12">12:00pm</option>
+                        <option value="13">01:00pm</option>
+                        <option value="14">02:00pm</option>
+                        <option value="15">03:00pm</option>
+                        <option value="16">04:00pm</option>
+                        <option value="17" selected>05:00pm</option>
+                        <option value="18">06:00pm</option>
+                        <option value="19">07:00pm</option>
+                        <option value="20">08:00pm</option>
+                        <option value="21">09:00pm</option>
+                        <option value="22">10:00pm</option>
+                        <option value="23">11:00pm</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <button type="submit" value="" id="wtw" class="button large text-center">Tell me what to wear</button>
                 </div>
             </div>
         </div>
     </div>
+    <div id="commuter-data" class="row">
+        <div class="small-12 large-4 columns" id="morning-commuter-data">
+            <h2>Morning</h2>
+            <p class="date"></p>
+            <div id="morning-forecast" class="row forecast">
+                <div class="large-6 columns">
+                    <img src="" id="morning-icon" class="float-left">
+                    <h1 id="morning-temp"></h1>
+                </div>
+                <div class="large-6 columns" id="morning-condition">   
+                    <p></p>
+                </div>
+            </div>
+            <div class="pop-warning callout ">
+                <p>There is a <strong><span class="pop-chance"></span></strong> chance of precipitation</p>
+            </div>
+        </div>
+        <div class="small-12 large-4 columns" id="evening-commuter-data">
+            <h2>Evening</h2>
+            <p class="date"></p>
+            <div id="evening-forecast" class="row forecast">
+                <div class="large-6 columns">
+                    <img src="" id="evening-icon" class="float-left">
+                    <h1 id="evening-temp"></h1>
+                </div>
+                <div class="large-6 columns" id="evening-condition">   
+                    <p></p>
+                </div>
+            </div>
+            <div class="pop-warning callout ">
+                <p>There is a <strong><span class="pop-chance"></span></strong> chance of precipitation.</p>
+            </div>
+        </div>
+        <div class="small-12 large-4 columns" id="packing-list">
+            <h4>Don't forget to pack:</h4>
+        </div>
+    </div>
+        
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="weather.js" type="text/javascript"></script>
 </body>
