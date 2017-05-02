@@ -17,37 +17,41 @@ $(document).ready(function(){
         .then(function(data){
             
             var cityLoc = data.location.city
-            var stateLoc = data.location.state
+                stateLoc = data.location.state
                 cityLocurl = cityLoc.replace(" ", "_")
-            var morningTime = ''
-            var eveningTime = ''
-            prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLocurl+".json"
+                morningTime = ''
+                eveningTime = ''
+
+                prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLocurl+".json"
+                //astroURL = "https://api.wunderground.com/api/a4e9f436358c9497/astronomy/q/"+stateLoc+"/"+cityLocurl+".json"
+
             $('#form-fields').fadeOut("fast", function(){
                var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2></div>").hide();
                $(this).replaceWith(div);
                $('#form-fields').fadeIn("fast");
             });
+
             $.get(prettySearchURL)
             .then(function(hourlydata){
+                console.log(hourlydata)
                 $('#commuter-data').show()
                 //for (i = 0; i <= hourlydata.hourly_forecast.length; i++) {
                  for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
                     // Time Variables
                     var timeObject = hourlydata.hourly_forecast[i].FCTTIME
-                    var paddedHour = timeObject.hour_padded
-                    var civilTime = timeObject.civil
-                    var weekday = timeObject.weekday_name
-                    var month = timeObject.month_name
-                    var date = timeObject.mday
-                    var year = timeObject.year 
+                        paddedHour = timeObject.hour_padded
+                        civilTime = timeObject.civil
+                        weekday = timeObject.weekday_name
+                        month = timeObject.month_name
+                        date = timeObject.mday
+                        year = timeObject.year 
                         today = weekday + " " + month + " " + date + ", " + year
                     
                     // Forecast variables
                     var forecastObject = hourlydata.hourly_forecast[i]
-                    var feelslike = forecastObject.feelslike.english
-                    var weatherIcon = forecastObject.icon_url
-                    var morningCondition = forecastObject.condition
-                    var popChance = forecastObject.pop
+                        feelslike = forecastObject.feelslike.english
+                        weatherIcon = forecastObject.icon_url
+                        popChance = forecastObject.pop
 
                     // Check Morning Time
                     if (paddedHour === morning) {
@@ -55,6 +59,8 @@ $(document).ready(function(){
                             today = weekday + " " + month + " " + date + ", " + year
                             morningTime = today + " at " + civilTime
                             morningWeatherIcon = weatherIcon
+                            morningTemp = feelslike
+                            morningCondition = forecastObject.condition
                         console.log("Items for morning:")
                         console.log(feelslike)
                         console.log(hourlydata.hourly_forecast[i])
@@ -62,6 +68,8 @@ $(document).ready(function(){
                         // Feels Like Temp Ranges
                         if (feelslike >= "40" && feelslike <= "50") {
                             console.log("temp range is 40-50")
+                            console.log("You'll need a light jacket")
+
                         } 
                         if (feelslike >= "30" && feelslike <= "40") {
                             console.log("temp range at " + morningTime +" is 30-40")
@@ -90,18 +98,22 @@ $(document).ready(function(){
                             today = weekday + " " + month + " " + date + ", " + year
                             eveningTime = today + " at " + civilTime
                             eveningWeatherIcon = weatherIcon
+                            eveningTemp = feelslike
+                            eveningCondition = forecastObject.condition
                     }
-                    
+                                    
                 }
                 var morningWeatherimg = $('#morning-icon') //Equivalent: $(document.createElement('img'))
                     morningWeatherimg.attr('src', morningWeatherIcon)
                 
                 $('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
                 $('#morning-commuter-data .date').append(morningTime)
-                $('#morning-forecast h1').append(feelslike+"&deg;<span>f</span>")
+                $('#morning-forecast h1').append(morningTemp+"&deg;<span>f</span>")
                 $('#morning-forecast p').append(morningCondition)
                 
                 $('#evening-commuter-data .date').append(eveningTime)
+                $('#evening-forecast h1').append(eveningTemp+"&deg;<span>f</span>")
+                $('#evening-forecast p').append(eveningCondition)
                 var eveningWeatherimg = $('#evening-icon') 
                     eveningWeatherimg.attr('src', eveningWeatherIcon)
 
