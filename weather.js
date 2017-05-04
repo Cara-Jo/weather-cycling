@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 
             $('#form-fields').fadeOut("fast", function(){
-               var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2></div>").hide();
+               var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2><img src='images/icons/"+stateLoc+".svg'/></div>").hide();
                $(this).replaceWith(div);
                $('#form-fields').fadeIn("fast");
             });
@@ -52,8 +52,10 @@ $(document).ready(function(){
                         feelslike: forecastObject.feelslike.english,
                         weatherIcon: forecastObject.icon_url,
                         popChance: forecastObject.pop,
+                        wind: forecastObject.wspd.english,
                     }
-                        
+                     
+                       
 
                     // Things you need while biking
                     var commuteNeeds = $("#commute-needs")
@@ -61,20 +63,20 @@ $(document).ready(function(){
                     var commuteItems = {
                         lightJacket: "Light Jacket",
                         mediumJacket: "A medium weight jacket",
-                        windJacket: "Wind Breaker",
-                        rainJacket: "Rain Jacket",
-                        heavyJacket: "Heavy Jacket",
+                        windJacket: "Wind breaker",
+                        rainJacket: "Rain jacket",
+                        heavyJacket: "Heavy jacket",
                         parkaJacket: "A Parka - for real.",
                         
-                        lightGloves: "Light Gloves",
-                        heavyGloves: "Heavy Gloves",
+                        lightGloves: "Light gloves",
+                        heavyGloves: "Heavy gloves",
                         
-                        headBand: "Light Head Band or Buff",
+                        headBand: "Light headband or Buff",
                         
                         warmSocks: "Warm socks",
                         warmShoes: "Warm shoes or boots",
-                        closedShoes: "Close Toed Shoes",
-                        sandalShoes: "Flippy Flops",
+                        closedShoes: "Regular shoes",
+                        sandalShoes: "Flippy flops",
                         
                         lightShirt: "A light shirt or cardigan",
                         teeShirt: "A stylish T-shirt",
@@ -96,8 +98,11 @@ $(document).ready(function(){
                             condition: forecastObject.condition,
                             pop: $("#morning-commuter-data .pop-warning"),
                             popChance: globalForecast.popChance,
+                            wind: globalForecast.wind,
                         }
                             commuteNeeds = $("#morning-commuter-data #commute-needs")
+                            console.log(forecastObject)
+                            console.log(morning.wind)
                         // Feels Like Temp Ranges
                         if (morning.temp === "98") {
                             console.log("It's going to be boyband hot out there.")
@@ -131,9 +136,10 @@ $(document).ready(function(){
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightGloves+"</label></li>")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.headBand+"</label></li>")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.jeanPants+"</label></li>")
-
-
                         } 
+                        if (morning.wind >= "12" ) {
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.windJacket+"</label></li>")
+                        }
                         if (morning.temp < "30") {
                             $("#alert-warning").show()
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.parkaJacket+"</label></li>")
@@ -175,6 +181,7 @@ $(document).ready(function(){
                             pop: $("#evening-commuter-data .pop-warning"),
                             popChance: globalForecast.popChance,
                             container: $("#evening-commuter-data"),
+                            wind: globalForecast.wind,
                         }
                          console.log(today)
                             commuteNeeds = $("#evening-commuter-data #commute-needs")
@@ -220,6 +227,9 @@ $(document).ready(function(){
                         if (evening.temp < "30") {
                             $("#alert-warning").show()
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.parkaJacket+"</label></li>")
+                        }
+                        if (evening.wind >= "12" ) {
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.windJacket+"</label></li>")
                         }
                         // Pop Chance
                         if (evening.popChance >= "0" && evening.popChance <= "9") {

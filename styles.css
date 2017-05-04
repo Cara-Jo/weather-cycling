@@ -26,6 +26,7 @@ h1, h2, h3, h4, h5 {
     /*font-size: 72px;*/
 }
 
+
 #form-fields-wrapper {
     background: #f5f5f5;
     padding: 30px;
@@ -36,6 +37,12 @@ h1, h2, h3, h4, h5 {
     margin: 0 auto;
     display: block;
 } 
+#form-fields img {
+    margin: 0 auto;
+    display: block;
+    max-width: 50px;
+    
+}
 #commuter-data {
     display: none;
     margin-top: 30px;
