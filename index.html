@@ -96,45 +96,61 @@
     </div>
     <div id="commuter-data" class="row">
 
-        <div class="small-12 large-4 columns" id="morning-commuter-data">
+        <div class="small-12 large-5 large-offset-1 columns commute-data" id="morning-commuter-data">
             <h2>Morning</h2>
             <p class="date"></p>
+            
             <div id="morning-forecast" class="row forecast">
                 <div class="large-6 columns">
-                    <img src="" id="morning-icon" class="float-left">
+                    <img src="" id="morning-icon" class="icon float-left">
                     <h1 id="morning-temp"></h1>
                 </div>
-                <div class="large-6 columns" id="morning-condition">   
+                <div class="condition large-6 columns" id="morning-condition">   
+                    <span><small>The weather is going to be:</small></span>
                     <p></p>
                 </div>
             </div>
+            
             <div class="pop-warning callout ">
                 <p>There is a <strong><span class="pop-chance"></span></strong> chance of precipitation</p>
             </div>
             <div>
+                <h4>To Wear:</h4>
                 <ul id="commute-needs">
                 </ul>
             </div>
         </div>
-        <div class="small-12 large-4 columns" id="evening-commuter-data">
+        <div class="small-12 large-5 columns commute-data" id="evening-commuter-data">
             <h2>Evening</h2>
             <p class="date"></p>
+            
             <div id="evening-forecast" class="row forecast">
                 <div class="large-6 columns">
-                    <img src="" id="evening-icon" class="float-left">
+                    <img src="" id="evening-icon" class="icon float-left">
                     <h1 id="evening-temp"></h1>
                 </div>
-                <div class="large-6 columns" id="evening-condition">   
+                <div class="condition large-6 columns" id="evening-condition">   
+                    <span><small>The weather is going to be:</small></span>
                     <p></p>
                 </div>
             </div>
+            
             <div class="pop-warning callout ">
                 <p>There is a <strong><span class="pop-chance"></span></strong> chance of precipitation.</p>
             </div>
+            <div>
+                <h4>To Wear:</h4>
+                <ul id="commute-needs">
+                </ul>
+            </div>
         </div>
-        <div class="small-12 large-4 columns" id="packing-list">
-            <h4>Don't forget to pack:</h4>
-        </div>
+        <!-- <div class="small-12 large-4 columns" id="packing-list">
+            <h4>To pack:</h4>
+            <ul>
+            <li><input type="checkbox"></input>Bike Lights</li>
+            </ul>
+
+        </div> -->
     </div>
         
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

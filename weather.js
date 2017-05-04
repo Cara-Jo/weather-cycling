@@ -2,18 +2,13 @@ $(document).ready(function(){
     var searchURL = "https://api.wunderground.com/api/a4e9f436358c9497/geolookup/q/"
     $("#morning-commuter-data .pop-warning").hide()
     $("#evening-commuter-data .pop-warning").hide()
-    $("#alert-warning").hide()
     $("#commuter-data").hide()
     $('#wtw').click(function(){
-        
-        //$('#morning-forecast h1').empty()
         var zipcode = $('#zip').val()
-        var morning = $('#morning-commute').val()
-        var evening = $('#evening-commute').val()
+        var morninghr = $('#morning-commute').val()
+        var eveninghr = $('#evening-commute').val()
         searchURL = searchURL + zipcode + ".json"
-        console.log(searchURL)
         
-        //console.log(zipcode)
         $.get(searchURL)
         .then(function(data){
             
@@ -24,8 +19,8 @@ $(document).ready(function(){
                 eveningTime = ''
 
                 prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLocurl+".json"
-                //astroURL = "https://api.wunderground.com/api/a4e9f436358c9497/astronomy/q/"+stateLoc+"/"+cityLocurl+".json"
-               //console.log(data)
+
+
             $('#form-fields').fadeOut("fast", function(){
                var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2></div>").hide();
                $(this).replaceWith(div);
@@ -34,108 +29,242 @@ $(document).ready(function(){
 
             $.get(prettySearchURL)
             .then(function(hourlydata){
-                //console.log(hourlydata)
                 $('#commuter-data').show()
-                //for (i = 0; i <= hourlydata.hourly_forecast.length; i++) {
-                 for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
-                    // Time Variables
+                var morningWeather
+                var eveningWeather
+                for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
+                    // Time 
                     var timeObject = hourlydata.hourly_forecast[i].FCTTIME
-                        paddedHour = timeObject.hour_padded
-                        civilTime = timeObject.civil
-                        weekday = timeObject.weekday_name
-                        month = timeObject.month_name
-                        date = timeObject.mday
-                        year = timeObject.year 
-                        today = weekday + " " + month + " " + date + ", " + year
+                    var globalData = {
+                        paddedHour: timeObject.hour_padded,
+                        civilTime: timeObject.civil,
+                        weekday: timeObject.weekday_name,
+                        month: timeObject.month_name,
+                        date: timeObject.mday,
+                        year: timeObject.year,
+                    }
+                    var today = globalData.weekday + " " + globalData.month + " " + globalData.date + ", " + globalData.year
+
                     
-                    // Forecast variables
+                    // Forecast
                     var forecastObject = hourlydata.hourly_forecast[i]
-                        feelslike = forecastObject.feelslike.english
-                        weatherIcon = forecastObject.icon_url
-                        popChance = forecastObject.pop
+                    var globalForecast = {
+                        feelslike: forecastObject.feelslike.english,
+                        weatherIcon: forecastObject.icon_url,
+                        popChance: forecastObject.pop,
+                    }
+                        
 
                     // Things you need while biking
                     var commuteNeeds = $("#commute-needs")
-                        lightJacket = "Light Jacket"
-                        windJacket = "Wind Breaker"
-                        rainJacket = "Rain Jacket"
-                        heavyJacket = "Heavy Jacket"
-                        checkbox = "<input type='checkbox'></input> "
+                    var checkbox = "<input type='checkbox'></input> "
+                    var commuteItems = {
+                        lightJacket: "Light Jacket",
+                        mediumJacket: "A medium weight jacket",
+                        windJacket: "Wind Breaker",
+                        rainJacket: "Rain Jacket",
+                        heavyJacket: "Heavy Jacket",
+                        parkaJacket: "A Parka - for real.",
+                        
+                        lightGloves: "Light Gloves",
+                        heavyGloves: "Heavy Gloves",
+                        
+                        headBand: "Light Head Band or Buff",
+                        
+                        warmSocks: "Warm socks",
+                        warmShoes: "Warm shoes or boots",
+                        closedShoes: "Close Toed Shoes",
+                        sandalShoes: "Flippy Flops",
+                        
+                        lightShirt: "A light shirt or cardigan",
+                        teeShirt: "A stylish T-shirt",
+                        tankTop: "A tank top!",
+                        sunsOut: "Sun's out, guns out.",
+                        
+                        warmPants: "Warm pants",
+                        jeanPants: "Just jeans",
+                    }
+                        
                     // Check Morning Time
-                    if (paddedHour === morning) {
-                        var morningWeather = forecastObject
-                            today = weekday + " " + month + " " + date + ", " + year
-                            morningTime = today + " at " + civilTime
-                            morningWeatherIcon = weatherIcon
-                            morningTemp = feelslike
-                            morningCondition = forecastObject.condition
-
-                            morningPOP = $("#morning-commuter-data .pop-warning") 
-
-
-                        // console.log("Items for morning:")
-                        // console.log(feelslike)
-                        // console.log(hourlydata.hourly_forecast[i])
-                        // console.log("Precip Chance: " + popChance)
+                    if (globalData.paddedHour === morninghr && !morningWeather) {
+                       //console.log(globalData.globalForecast)
+                       var morning = {
+                            today: today,
+                            time: today + " at " + globalData.civilTime,
+                            weatherIcon: globalForecast.weatherIcon,
+                            temp: "10",
+                            //temp: globalForecast.feelslike,
+                            condition: forecastObject.condition,
+                            pop: $("#morning-commuter-data .pop-warning"),
+                            popChance: globalForecast.popChance,
+                        }
+                            commuteNeeds = $("#morning-commuter-data #commute-needs")
                         // Feels Like Temp Ranges
-                        if (feelslike >= "40" && feelslike <= "50") {
+                        if (morning.temp === "98") {
+                            console.log("It's going to be boyband hot out there.")
+                        }
+                        if (morning.temp >= "81") {
                             //console.log("temp range is 40-50")
-                            commuteNeeds.append("<li>"+checkbox+lightJacket+"</li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.tankTop+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
+                        } 
+                        if (morning.temp >= "71" && morning.temp <= "80") {
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
+                        } 
+                        if (morning.temp >= "61" && morning.temp <= "70") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightshirt+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+" or "+commuteItems.closedShoes+"</label></li>")
+                        } 
+                        if (morning.temp >= "51" && morning.temp <= "60") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.closedShoes+"</label></li>")
+                        } 
+                        if (morning.temp >= "41" && morning.temp <= "50") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.jeanPants+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightGloves+"</label></li>")
+                        } 
+                        if (morning.temp >= "31" && morning.temp <= "40") {
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.mediumJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightGloves+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.headBand+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.jeanPants+"</label></li>")
+
 
                         } 
-                        if (feelslike >= "30" && feelslike <= "40") {
-                            //console.log("temp range at " + morningTime +" is 30-40")
-                            $('#commute-needs').html("<li>"+checkbox+lightJacket+"</li>")
-                        } 
-
+                        if (morning.temp < "30") {
+                            $("#alert-warning").show()
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.parkaJacket+"</label></li>")
+                        }
                         // Pop Chance
-                        if (popChance >= "0" && popChance <= "9") {
+                        if (morning.popChance >= "0" && morning.popChance <= "9") {
                             $("#morning-commuter-data .pop-warning").addClass("no-pop").hide()
                         }
-                        if (popChance >= "10" && popChance <= "29") {
-                            morningPOP.addClass("secondary").show()
-                            $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
+                        if (morning.popChance >= "10" && morning.popChance <= "29") {
+                            morning.pop.addClass("secondary").show()
+                            $("#morning-commuter-data .pop-warning .pop-chance").text(morning.popChance + "%")
                         }
-                        if (popChance >= "30" && popChance <= "49") {
-                            morningPOP.addClass("primary").show()
-                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(popChance + "%")
-                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
+                        if (morning.popChance >= "30" && morning.popChance <= "49") {
+                            morning.pop.addClass("primary").show()
+                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(morning.popChance + "%")
+                            $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
-                        if (popChance >= "50" && popChance <= "79") {
-                            morningPOP.addClass("warning").show()
-                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(popChance + "%")
-                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
+                        if (morning.popChance >= "50" && morning.popChance <= "79") {
+                            morning.pop.addClass("warning").show()
+                            $("#alert-warning").show()
+                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(morning.popChance + "%")
+                            $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
-                        if (popChance >= "80" && popChance <= "100") {
-                            morningPOP.addClass("alert").show()
-                            $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
-                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
+                        if (morning.popChance >= "80" ) {
+                            morning.pop.addClass("alert").show()
+                            $("#alert-warning").show()
+                            $("#morning-commuter-data .pop-warning .pop-chance").text(morning.popChance + "%")
+                            $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
-                        
                     }
-                    if (paddedHour === evening) {
-                        var eveningWeather = forecastObject
-                            today = weekday + " " + month + " " + date + ", " + year
-                            eveningTime = today + " at " + civilTime
-                            eveningWeatherIcon = weatherIcon
-                            eveningTemp = feelslike
-                            eveningCondition = forecastObject.condition
-                    }
+                    if (globalData.paddedHour === eveninghr && !eveningWeather) {
+
+                        var evening = {
+                            today: today,
+                            time: today + " at " + globalData.civilTime,
+                            weatherIcon: globalForecast.weatherIcon,
+                            temp: globalForecast.feelslike,
+                            condition: forecastObject.condition,
+                            pop: $("#evening-commuter-data .pop-warning"),
+                            popChance: globalForecast.popChance,
+                            container: $("#evening-commuter-data"),
+                        }
+                         console.log(today)
+                            commuteNeeds = $("#evening-commuter-data #commute-needs")
+
+                        if (evening.temp === "98") {
+                            console.log("It's going to be boyband hot out there.")
+                        }
+                        if (evening.temp >= "81") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.tankTop+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
+                        } 
+                        if (evening.temp >= "71" && evening.temp <= "80") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightshirt+"</label></li>")
+                            console.log("71")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
+                        } 
+                        if (evening.temp >= "61" && evening.temp <= "70") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightshirt+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+" or "+commuteItems.closedShoes+"</label></li>")
+                        } 
+                        if (evening.temp >= "51" && evening.temp <= "60") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.closedShoes+"</label></li>")
+                        } 
+                        if (evening.temp >= "41" && evening.temp <= "50") {
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.jeanPants+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightGloves+"</label></li>")
+                        } 
+                        if (evening.temp >= "31" && evening.temp <= "40") {
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.mediumJacket+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightGloves+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.headBand+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.jeanPants+"</label></li>")
+
+
+                        } 
+                        if (evening.temp < "30") {
+                            $("#alert-warning").show()
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.parkaJacket+"</label></li>")
+                        }
+                        // Pop Chance
+                        if (evening.popChance >= "0" && evening.popChance <= "9") {
+                            $("#evening-commuter-data .pop-warning").addClass("no-pop").hide()
+                        }
+                        if (evening.popChance >= "10" && evening.popChance <= "29") {
+                            evening.pop.addClass("secondary").show()
+                            $("#evening-commuter-data .pop-warning .pop-chance").text(evening.popChance + "%")
+                        }
+                        if (evening.popChance >= "30" && evening.popChance <= "49") {
+                            evening.pop.addClass("primary").show()
+                            $("#evening-commuter-data .pop-warning .pop-warning .pop-chance").text(evening.popChance + "%")
+                            $(evening.container+"#commute-needs").append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
+                        }
+                        if (evening.popChance >= "50" && evening.popChance <= "79") {
+                            evening.pop.addClass("warning").show()
+                            $("#alert-warning").show()
+                            $("#evening-commuter-data .pop-warning .pop-warning .pop-chance").text(evening.popChance + "%")
+                            $(evening.container+"#commute-needs").append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
+                        }
+                        if (evening.popChance >= "80" ) {
+                            evening.pop.addClass("alert").show()
+                            $("#alert-warning").show()
+                            $("#evening-commuter-data .pop-warning .pop-chance").text(evening.popChance + "%")
+                            $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
+                        }
+                    }   
                                     
                 }
                 var morningWeatherimg = $('#morning-icon') //Equivalent: $(document.createElement('img'))
-                    morningWeatherimg.attr('src', morningWeatherIcon)
-                
-                $('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
-                $('#morning-commuter-data .date').append(morningTime)
-                $('#morning-forecast h1').append(morningTemp+"&deg;<span>f</span>")
-                $('#morning-forecast p').append(morningCondition)
-                
-                $('#evening-commuter-data .date').append(eveningTime)
-                $('#evening-forecast h1').append(eveningTemp+"&deg;<span>f</span>")
-                $('#evening-forecast p').append(eveningCondition)
+                    morningWeatherimg.attr('src', morning.weatherIcon)
                 var eveningWeatherimg = $('#evening-icon') 
-                    eveningWeatherimg.attr('src', eveningWeatherIcon)
+                    eveningWeatherimg.attr('src', evening.weatherIcon)
+
+                $('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
+
+                $('#morning-commuter-data .date').append(morning.time)
+                $('#morning-forecast h1').append(morning.temp+"&deg;<span>f</span>")
+                $('#morning-condition p').append(morning.condition)
+                
+                $('#evening-commuter-data .date').append(evening.time)
+                $('#evening-forecast h1').append(evening.temp+"&deg;<span>f</span>")
+                $('#evening-condition p').append(evening.condition)
+                
 
             })
             //var $cityName = $("<h1>")
