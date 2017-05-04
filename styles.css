@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5 {
 #form-fields-wrapper .button {
     margin: 0 auto;
     display: block;
-}
+} 
 #commuter-data {
     display: none;
     margin-top: 30px;
@@ -43,4 +43,23 @@ h1, h2, h3, h4, h5 {
 
 .forecast h1 span {
     font-weight: 200;
+}
+
+#alert-warning {
+    background: #B83239;
+    color: #fff;
+}
+
+#commuter-data #commute-needs {
+    list-style-type: none;
+    margin-left: 0;
+}
+
+#commuter-data #commute-needs li {
+    font-size: 18px;
+}
+
+.no-pop {
+    visibility: hidden;
+    display: none;
 }

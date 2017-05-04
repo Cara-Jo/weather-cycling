@@ -2,6 +2,7 @@ $(document).ready(function(){
     var searchURL = "https://api.wunderground.com/api/a4e9f436358c9497/geolookup/q/"
     $("#morning-commuter-data .pop-warning").hide()
     $("#evening-commuter-data .pop-warning").hide()
+    $("#alert-warning").hide()
     $("#commuter-data").hide()
     $('#wtw').click(function(){
         
@@ -24,7 +25,7 @@ $(document).ready(function(){
 
                 prettySearchURL = "https://api.wunderground.com/api/a4e9f436358c9497/hourly/q/"+stateLoc+"/"+cityLocurl+".json"
                 //astroURL = "https://api.wunderground.com/api/a4e9f436358c9497/astronomy/q/"+stateLoc+"/"+cityLocurl+".json"
-
+               //console.log(data)
             $('#form-fields').fadeOut("fast", function(){
                var div = $("<div id='form-fields'><h1 class='text-center'>"+cityLoc+", "+stateLoc+"</h2></div>").hide();
                $(this).replaceWith(div);
@@ -33,7 +34,7 @@ $(document).ready(function(){
 
             $.get(prettySearchURL)
             .then(function(hourlydata){
-                console.log(hourlydata)
+                //console.log(hourlydata)
                 $('#commuter-data').show()
                 //for (i = 0; i <= hourlydata.hourly_forecast.length; i++) {
                  for (i = hourlydata.hourly_forecast.length - 1; i >= 0; i--) {
@@ -53,6 +54,13 @@ $(document).ready(function(){
                         weatherIcon = forecastObject.icon_url
                         popChance = forecastObject.pop
 
+                    // Things you need while biking
+                    var commuteNeeds = $("#commute-needs")
+                        lightJacket = "Light Jacket"
+                        windJacket = "Wind Breaker"
+                        rainJacket = "Rain Jacket"
+                        heavyJacket = "Heavy Jacket"
+                        checkbox = "<input type='checkbox'></input> "
                     // Check Morning Time
                     if (paddedHour === morning) {
                         var morningWeather = forecastObject
@@ -61,37 +69,49 @@ $(document).ready(function(){
                             morningWeatherIcon = weatherIcon
                             morningTemp = feelslike
                             morningCondition = forecastObject.condition
-                        console.log("Items for morning:")
-                        console.log(feelslike)
-                        console.log(hourlydata.hourly_forecast[i])
-                        console.log("Precip Chance: " + popChance)
+
+                            morningPOP = $("#morning-commuter-data .pop-warning") 
+
+
+                        // console.log("Items for morning:")
+                        // console.log(feelslike)
+                        // console.log(hourlydata.hourly_forecast[i])
+                        // console.log("Precip Chance: " + popChance)
                         // Feels Like Temp Ranges
                         if (feelslike >= "40" && feelslike <= "50") {
-                            console.log("temp range is 40-50")
-                            console.log("You'll need a light jacket")
+                            //console.log("temp range is 40-50")
+                            commuteNeeds.append("<li>"+checkbox+lightJacket+"</li>")
 
                         } 
                         if (feelslike >= "30" && feelslike <= "40") {
-                            console.log("temp range at " + morningTime +" is 30-40")
+                            //console.log("temp range at " + morningTime +" is 30-40")
+                            $('#commute-needs').html("<li>"+checkbox+lightJacket+"</li>")
                         } 
+
                         // Pop Chance
+                        if (popChance >= "0" && popChance <= "9") {
+                            $("#morning-commuter-data .pop-warning").addClass("no-pop").hide()
+                        }
                         if (popChance >= "10" && popChance <= "29") {
-                            $("#morning-commuter-data .pop-warning").addClass("secondary").show()
+                            morningPOP.addClass("secondary").show()
                             $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
                         }
                         if (popChance >= "30" && popChance <= "49") {
-                            $("#morning-commuter-data .pop-warning").addClass("primary").show()
-                            $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
+                            morningPOP.addClass("primary").show()
+                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(popChance + "%")
+                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
                         }
                         if (popChance >= "50" && popChance <= "79") {
-                            $("#morning-commuter-data .pop-warning").addClass("warning").show()
-                            $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
+                            morningPOP.addClass("warning").show()
+                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(popChance + "%")
+                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
                         }
                         if (popChance >= "80" && popChance <= "100") {
-                            $("#morning-commuter-data .pop-warning").addClass("alert").show()
+                            morningPOP.addClass("alert").show()
                             $("#morning-commuter-data .pop-warning .pop-chance").text(popChance + "%")
+                            $('#commute-needs').append("<li>"+checkbox+rainJacket+"</li>")
                         }
-
+                        
                     }
                     if (paddedHour === evening) {
                         var eveningWeather = forecastObject
