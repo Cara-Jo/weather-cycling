@@ -34,6 +34,11 @@ h1, h2, h3, h4, h5 {
     height: 200px;
 
 }
+@media (max-width: 600px) {
+    #form-fields-wrapper {
+        height: auto;
+    }
+}
 #form-fields-wrapper .button {
     margin: 0 auto;
     display: block;
