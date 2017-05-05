@@ -2,6 +2,7 @@
 body {
     font-family: "Nunito Sans";
     color: #00283A;
+
 }
 h1, h2, h3, h4, h5 {
     font-family: "Montserrat";
@@ -41,7 +42,7 @@ h1, h2, h3, h4, h5 {
     margin: 0 auto;
     display: block;
     max-width: 50px;
-    
+
 }
 #commuter-data {
     display: none;
@@ -103,4 +104,13 @@ h1, h2, h3, h4, h5 {
 
 .no-pop {
     display: none;
+}
+
+#footer {
+    padding: 50px 0;
+    text-align: center;
+      color: #838383;
+}
+#footer p {
+    margin-bottom: 0;
 }
