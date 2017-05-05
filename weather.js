@@ -89,6 +89,7 @@ $(document).ready(function(){
                         
                     // Check Morning Time
                     if (globalData.paddedHour === morninghr && !morningWeather) {
+                        morningWeather = true
                        //console.log(globalData.globalForecast)
                        var morning = {
                             today: today,
@@ -117,7 +118,7 @@ $(document).ready(function(){
                         } 
                         if (morning.temp >= "61" && morning.temp <= "70") {
                             //console.log("temp range is 40-50")
-                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightshirt+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightShirt+"</label></li>")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+" or "+commuteItems.closedShoes+"</label></li>")
                         } 
                         if (morning.temp >= "51" && morning.temp <= "60") {
@@ -171,7 +172,8 @@ $(document).ready(function(){
                         }
                     }
                     if (globalData.paddedHour === eveninghr && !eveningWeather) {
-
+                        eveningWeather = true
+                        console.log(forecastObject)
                         var evening = {
                             today: today,
                             time: today + " at " + globalData.civilTime,
@@ -196,7 +198,7 @@ $(document).ready(function(){
                         } 
                         if (evening.temp >= "71" && evening.temp <= "80") {
                             //console.log("temp range is 40-50")
-                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightshirt+"</label></li>")
+                            commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightShirt+"</label></li>")
                             console.log("71")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
                         } 
