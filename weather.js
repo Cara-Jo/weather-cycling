@@ -95,8 +95,7 @@ $(document).ready(function(){
                             today: today,
                             time: today + " at " + globalData.civilTime,
                             weatherIcon: globalForecast.weatherIcon,
-                            //temp: globalForecast.feelslike,
-                            temp: 10,
+                            temp: globalForecast.feelslike,
                             condition: forecastObject.condition,
                             pop: $("#morning-commuter-data .pop-warning"),
                             popChance: globalForecast.popChance,
@@ -107,7 +106,8 @@ $(document).ready(function(){
                             //console.log(morning.wind)
                         // Feels Like Temp Ranges
                         if (morning.temp === "98") {
-                            console.log("It's going to be boyband hot out there.")
+                            $("#alert-warning").show()
+                            $("#alert-warning h2").text("It's going to be boyband hot out there")
                         }
                         if (morning.temp >= "81") {
                             //console.log("temp range is 40-50")
@@ -175,7 +175,6 @@ $(document).ready(function(){
                     // EVENING
                     if (globalData.paddedHour === eveninghr && !eveningWeather) {
                         eveningWeather = true
-                        console.log(forecastObject)
                         var evening = {
                             today: today,
                             time: today + " at " + globalData.civilTime,
@@ -187,11 +186,11 @@ $(document).ready(function(){
                             container: $("#evening-commuter-data"),
                             wind: globalForecast.wind,
                         }
-                         console.log(today)
                             commuteNeeds = $("#evening-commuter-data #commute-needs")
 
                         if (evening.temp === "98") {
-                            console.log("It's going to be boyband hot out there.")
+                            $("#alert-warning").show()
+                            $("#alert-warning h2").text("It's going to be boyband hot out there")
                         }
                         if (evening.temp >= "81") {
                             //console.log("temp range is 40-50")
@@ -201,7 +200,6 @@ $(document).ready(function(){
                         if (evening.temp >= "71" && evening.temp <= "80") {
                             //console.log("temp range is 40-50")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.lightShirt+"</label></li>")
-                            console.log("71")
                             commuteNeeds.append("<li><label>"+checkbox+commuteItems.sandalShoes+"</label></li>")
                         } 
                         if (evening.temp >= "61" && evening.temp <= "70") {

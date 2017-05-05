@@ -95,6 +95,7 @@ h1, h2, h3, h4, h5 {
     color: #fff;
     padding: 15px;
     display: none;
+    text-align: center;
 }
 
 #commuter-data #commute-needs {
