@@ -87,7 +87,7 @@ $(document).ready(function(){
                         jeanPants: "Just jeans",
                     }
                         
-                    // Check Morning Time
+                    // MORNING
                     if (globalData.paddedHour === morninghr && !morningWeather) {
                         morningWeather = true
                        //console.log(globalData.globalForecast)
@@ -102,8 +102,8 @@ $(document).ready(function(){
                             wind: globalForecast.wind,
                         }
                             commuteNeeds = $("#morning-commuter-data #commute-needs")
-                            console.log(forecastObject)
-                            console.log(morning.wind)
+                            //console.log(forecastObject)
+                            //console.log(morning.wind)
                         // Feels Like Temp Ranges
                         if (morning.temp === "98") {
                             console.log("It's going to be boyband hot out there.")
@@ -155,13 +155,13 @@ $(document).ready(function(){
                         }
                         if (morning.popChance >= "30" && morning.popChance <= "49") {
                             morning.pop.addClass("primary").show()
-                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(morning.popChance + "%")
+                            $("#morning-commuter-data .pop-warning .pop-chance").text(morning.popChance + "%")
                             $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                         if (morning.popChance >= "50" && morning.popChance <= "79") {
                             morning.pop.addClass("warning").show()
                             $("#alert-warning").show()
-                            $("#morning-commuter-data .pop-warning .pop-warning .pop-chance").text(morning.popChance + "%")
+                            $("#morning-commuter-data .pop-warning .pop-chance").text(morning.popChance + "%")
                             $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                         if (morning.popChance >= "80" ) {
@@ -171,6 +171,7 @@ $(document).ready(function(){
                             $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                     }
+                    // EVENING
                     if (globalData.paddedHour === eveninghr && !eveningWeather) {
                         eveningWeather = true
                         console.log(forecastObject)
@@ -243,13 +244,13 @@ $(document).ready(function(){
                         }
                         if (evening.popChance >= "30" && evening.popChance <= "49") {
                             evening.pop.addClass("primary").show()
-                            $("#evening-commuter-data .pop-warning .pop-warning .pop-chance").text(evening.popChance + "%")
+                            $("#evening-commuter-data .pop-warning .pop-chance").text(evening.popChance + "%")
                             $(evening.container+"#commute-needs").append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                         if (evening.popChance >= "50" && evening.popChance <= "79") {
                             evening.pop.addClass("warning").show()
                             $("#alert-warning").show()
-                            $("#evening-commuter-data .pop-warning .pop-warning .pop-chance").text(evening.popChance + "%")
+                            $("#evening-commuter-data .pop-warning .pop-chance").text(evening.popChance + "%")
                             $(evening.container+"#commute-needs").append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                         if (evening.popChance >= "80" ) {
@@ -266,8 +267,10 @@ $(document).ready(function(){
                 var eveningWeatherimg = $('#evening-icon') 
                     eveningWeatherimg.attr('src', evening.weatherIcon)
 
-                $('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
+                
+                //$('#form-fields #city-loc').text(cityLoc+", "+stateLoc)
 
+                // Insert Morning data
                 $('#morning-commuter-data .date').append(morning.time)
                 $('#morning-forecast h1').append(morning.temp+"&deg;<span>f</span>")
                 $('#morning-condition p').append(morning.condition)
@@ -278,11 +281,6 @@ $(document).ready(function(){
                 
 
             })
-            //var $cityName = $("<h1>")
-            // replace space in city name with _ using .replace() <- look that up.
         })
-        // .get gets a url - in this case it's the search URL
-        //.then gets whatever was returned in the previous function - get's passed into this function as data
-
     })
 })
