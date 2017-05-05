@@ -160,8 +160,9 @@ $(document).ready(function(){
                             $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
                         if (morning.popChance >= "50" && morning.popChance <= "79") {
+                            console.log(morning.popChance)
                             morning.pop.addClass("warning").show()
-                            $("#alert-warning").show()
+                            //$("#alert-warning").show()
                             $("#morning-commuter-data .pop-warning .pop-chance").text(morning.popChance + "%")
                             $('#commute-needs').append("<li><label>"+checkbox+commuteItems.rainJacket+"</label></li>")
                         }
